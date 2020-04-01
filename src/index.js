@@ -1,22 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import { createStore } from 'redux';
-import counter from './reducers'
+import counter from './reducers';
+import Counter from './Counter';
 
 // create a store, which takes a reducer as an argument - see import list.
 // createStore method comes from redux.
 const store = createStore(counter);
 
-
-
-
-
-
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+const render = () => ReactDOM.render(
+    <Counter 
+      value={store.getState()}
+      onIncrement={() => store.dispatch({ type: 'INCREMENT' })}
+      onDecrement={() => store.dispatch({ type: 'DECREMENT' })}
+    />,
   document.getElementById('root')
 );
+
+render()
+store.subscribe(render)
+
